@@ -28,7 +28,13 @@ class Produit
      * @var Collection<int, Pays>
      */
     #[ORM\ManyToMany(targetEntity: Pays::class, inversedBy: 'produits')]
+    #[ORM\JoinTable(
+        name: 'l3_produit_pays',
+        joinColumns: [new ORM\JoinColumn(name: 'produit_id', referencedColumnName: 'id')],
+        inverseJoinColumns: [new ORM\JoinColumn(name: 'pays_id', referencedColumnName: 'id')]
+    )]
     private Collection $pays;
+
 
     public function __construct()
     {
