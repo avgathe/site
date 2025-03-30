@@ -1,0 +1,11 @@
+{% extends 'Layouts/layout_vente.html.twig' %}
+
+{% block title %}Bienvenue{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/titres.css') }}" />
+{% endblock %}
+
+{% block titre_principal %}Bienvenue sur notre {{ parent() }}
+{% endblock %}
