@@ -35,11 +35,16 @@ class Produit
     )]
     private Collection $pays;
 
+    #[ORM\OneToMany(targetEntity: Panier::class, mappedBy: 'produit')]
+    private Collection $paniers;
+
 
     public function __construct()
     {
         $this->pays = new ArrayCollection();
+        $this->paniers = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -102,6 +107,18 @@ class Produit
     public function removePay(Pays $pay): static
     {
         $this->pays->removeElement($pay);
+
+        return $this;
+    }
+
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function setPaniers(Collection $paniers): static
+    {
+        $this->paniers = $paniers;
 
         return $this;
     }

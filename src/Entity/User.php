@@ -7,6 +7,9 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -47,6 +50,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Pays $pays = null;
+
+    #[ORM\OneToMany(targetEntity: Panier::class, mappedBy: 'client')]
+    private Collection $paniers;
+
+    public function __construct()
+    {
+        $this->roles = ['ROLE_USER'];
+        $this->paniers = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -182,4 +195,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function setPaniers(Collection $paniers): static
+    {
+        $this->paniers = $paniers;
+
+        return $this;
+    }
+
 }
