@@ -1,0 +1,15 @@
+<div id="bandeau">
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if app.user.isEstAdmin() %}
+            <!-- Image pour un administrateur -->
+            <img src="{{ asset('images/banner_admin.webp') }}" alt="Bandeau Administrateur">
+        {% else %}
+            <!-- Image pour un utilisateur authentifié non admin -->
+            <img src="{{ asset('images/banner_user.webp') }}" alt="Bandeau Utilisateur Authentifié">
+        {% endif %}
+    {% else %}
+        <!-- Image pour un utilisateur non authentifié -->
+        <img src="{{ asset('images/banner_guest.webp') }}" alt="Bandeau Public">
+    {% endif %}
+</div>
+
