@@ -1,0 +1,31 @@
+{% extends 'Layouts/layout.html.twig' %}
+
+{% block title %}Vente{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/layout_vente.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    {#    <div id="menu">#}
+    {#        {{ render(controller('App\\Controller\\AccueilController::menuAction')) }}#}
+    {#    </div>#}
+
+    <div id="header">
+        {% include 'Layouts/_header.html.twig' %}
+    </div>
+
+    <div id="titre">
+        <h1>{% block titre_principal %}Site de vente{% endblock %}</h1>
+    </div>
+
+    <div id="vue">
+        {% block vue %}{% endblock %}
+    </div>
+
+    <div id="footer">
+        {% include 'Layouts/_footer.html.twig' %}
+    </div>
+{% endblock %}
