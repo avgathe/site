@@ -13,9 +13,10 @@
     height: auto; /* Maintient les proportions de l'image */
     max-width: 120px; /* Définit une largeur maximale */
     max-height: 120px; /* Définit une hauteur maximale */
+    align-items: center;
 }
 
-#footer {
+#footer, #bandeau {
     display: flex;
     justify-content: center; /* Centrer l'image si nécessaire */
     align-items: center;

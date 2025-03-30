@@ -9,16 +9,12 @@
 
 {% block body %}
 
-    {#    <div id="menu">#}
-    {#        {{ render(controller('App\\Controller\\AccueilController::menuAction')) }}#}
-    {#    </div>#}
-
     <div id="header">
         {% include 'Layouts/_header.html.twig' %}
     </div>
 
-    <div id="titre">
-        <h1>{% block titre_principal %}Site de vente{% endblock %}</h1>
+    <div id="menu">
+        {{ render(controller('App\\Controller\\AccueilController::menuAction')) }}
     </div>
 
     <div id="vue">

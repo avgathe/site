@@ -9,9 +9,23 @@ use Symfony\Component\Routing\Attribute\Route;
 class AccueilController extends AbstractController
 {
     #[Route('/', name: 'accueil_index')]
-    public function indexAction(): Response
+    public function index(Security $security): Response
     {
-        return $this->render('Accueil/index.html.twig');
+
+        $user = $security->getUser();
+        $roles = $user ? $user->getRoles() : ['ROLE_VISITEUR'];
+
+        return $this->render('index.html.twig', [
+            'roles' => $roles,
+        ]);
+    }
+
+
+    public function menuAction(): Response
+    {
+        $args = array(
+        );
+        return $this->render('Layouts/_menu.html.twig', $args);
     }
 
 }
