@@ -1,0 +1,24 @@
+#titre h1 {
+    border: 3px solid #007bff; /* Couleur bleue */
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    color: #333333; /* Couleur du texte */
+}
+
+
+/* Gestion de la taille des images du header et du footer */
+#bandeau img, #footer img {
+    width: 100%; /* Adapte la largeur à 100% de l'espace disponible */
+    height: auto; /* Maintient les proportions de l'image */
+    max-width: 120px; /* Définit une largeur maximale */
+    max-height: 120px; /* Définit une hauteur maximale */
+}
+
+#footer {
+    display: flex;
+    justify-content: center; /* Centrer l'image si nécessaire */
+    align-items: center;
+}
+
+
