@@ -1,0 +1,12 @@
+{% extends 'Layouts/layout_vente.html.twig' %}
+
+{% block title %}création compte client{% endblock %}
+
+{% block vue %}
+    <h2>Création de votre compte client</h2>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-primary">Créer</button>
+    {{ form_end(form) }}
+
+{% endblock %}

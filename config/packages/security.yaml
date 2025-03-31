@@ -40,9 +40,10 @@ security:
         # Easy way to control access for large sections of your site
         # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/$, roles: PUBLIC_ACCESS }                      # page d'accueil publique
-        - { path: ^/login$, roles: PUBLIC_ACCESS }        # page de login publique (par définition)
-        - { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }         # autres pages : nécessité d'être authentifié
+        - { path: ^/$, roles: PUBLIC_ACCESS }
+        - { path: ^/login$, roles: PUBLIC_ACCESS }
+        - { path: ^/form/edit-client$, roles: PUBLIC_ACCESS } # Autorise l'accès à cette route pour les non authentifiés
+        - { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }       # autres pages : nécessité d'être authentifié
 
 
 when@test:
