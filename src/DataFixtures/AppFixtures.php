@@ -40,9 +40,9 @@ class AppFixtures extends Fixture
         // --- Création des 4 utilisateurs requis ---
         $users = [
             ['login' => 'sadmin', 'password' => 'nimdas', 'role' => 'ROLE_SUPER_ADMIN', 'nom' => 'Admin', 'prenom' => 'Super', 'admin' => false],
-            ['login' => 'gilles', 'password' => 'sellig', 'role' => 'ROLE_ADMIN', 'nom' => 'Dupont', 'prenom' => 'Gilles', 'admin' => true],
-            ['login' => 'rita', 'password' => 'atir', 'role' => 'ROLE_USER', 'nom' => 'Durand', 'prenom' => 'Rita', 'admin' => false],
-            ['login' => 'boumediene', 'password' => 'eneidemuob', 'role' => 'ROLE_USER', 'nom' => 'Boumediene', 'prenom' => 'Samir', 'admin' => false],
+            ['login' => 'gilles', 'password' => 'sellig', 'role' => 'ROLE_ADMIN', 'nom' => 'Subrenat', 'prenom' => 'Gilles', 'admin' => true],
+            ['login' => 'rita', 'password' => 'atir', 'role' => 'ROLE_CLIENT', 'nom' => 'Zrour', 'prenom' => 'Rita', 'admin' => false],
+            ['login' => 'boumediene', 'password' => 'eneidemuob', 'role' => 'ROLE_CLIENT', 'nom' => 'Saidi', 'prenom' => 'Boumediene', 'admin' => false],
         ];
 
         foreach ($users as $u) {

@@ -1,6 +1,6 @@
 <div id="bandeau">
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        {% if app.user.isEstAdmin() %}
+        {% if app.user.isAdmin() %}
             <!-- Image pour un administrateur -->
             <img src="{{ asset('images/banner_admin.webp') }}" alt="Bandeau Administrateur">
         {% else %}

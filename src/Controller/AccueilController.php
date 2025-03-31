@@ -23,11 +23,25 @@ class AccueilController extends AbstractController
     }
 
 
-    public function menuAction(): Response
+    public function menuAction(Security $security): Response
     {
-        $args = array(
-        );
-        return $this->render('Layouts/_menu.html.twig', $args);
+        // Récupération de l'utilisateur via le composant Security
+        $user = $security->getUser();
+        $articleCount = 0;
+
+        // Vérifier si un utilisateur est connecté
+        if ($user && !$this->isGranted('ROLE_SUPER_ADMIN')) {
+            // Récupérer le panier depuis l'utilisateur ou un service centralisé
+            $basket = $user->getPaniers(); // Méthode personnalisée qui retourne le panier
+            $articleCount = array_sum(array_map(fn($panier) => $panier->getQuantity(), $basket->toArray()));
+
+        }
+
+        return $this->render('Layouts/_menu.html.twig', [
+            'user' => $user,
+            'articleCount' => $articleCount,
+        ]);
     }
+
 
 }
