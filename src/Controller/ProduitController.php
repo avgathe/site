@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ProduitRepository;
+
+
 
 final class ProduitController extends AbstractController
 {
@@ -20,6 +23,18 @@ final class ProduitController extends AbstractController
             'controller_name' => 'ProduitController',
         ]);
     }
+
+    #[Route('/produits', name: 'produit_liste')]
+    public function liste(ProduitRepository $produitRepository): Response
+    {
+        $produits = $produitRepository->findAll();
+
+        return $this->render('produit/index.html.twig', [
+            'produits' => $produits
+        ]);
+    }
+
+
 
     #[Route('/admin/produit/ajout', name: 'produit_ajout')]
     public function ajouter(Request $request, EntityManagerInterface $em, Security $security): Response

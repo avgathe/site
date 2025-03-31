@@ -7,7 +7,7 @@
             <li><a href="{{ path('app_logout') }}">vous déconnecter</a></li>
             <li>gérer votre profil</li>
             <li><a href="{{ path('accueil_index') }}">aller à la page d’accueil</a></li>
-            <li>lister les produits</li>
+            <li><a href="{{ path('produit_liste') }}">Voir les produits</a></li>
             <li>gérer le panier</li>
         </ul>
             {% if is_granted('ROLE_ADMIN') %}
