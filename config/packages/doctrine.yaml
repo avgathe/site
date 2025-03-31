@@ -25,8 +25,8 @@ doctrine:
 when@test:
     doctrine:
         dbal:
-            url: 'sqlite:///%kernel.project_dir%/bd_commerce/data.db'
-
+            # "TEST_TOKEN" is typically set by ParaTest
+            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
 
 when@prod:
     doctrine:
