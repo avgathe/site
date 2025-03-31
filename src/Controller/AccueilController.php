@@ -34,7 +34,7 @@ class AccueilController extends AbstractController
         if ($user && !$this->isGranted('ROLE_SUPER_ADMIN')) {
             // Récupérer le panier depuis l'utilisateur ou un service centralisé
             $basket = $user->getPaniers(); // Méthode personnalisée qui retourne le panier
-            $articleCount = array_sum(array_map(fn($panier) => $panier->getQuantity(), $basket->toArray()));
+            $articleCount = array_sum(array_map(fn($panier) => $panier->getQuantite(), $basket->toArray()));
 
         }
 
