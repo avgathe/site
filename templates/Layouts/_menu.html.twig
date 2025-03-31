@@ -1,22 +1,25 @@
 <div id="menu">
-<h2>Menu</h2>
-    {% if user == 'ROLE_CLIENT' %}
+    <h2>Menu</h2>
+
+    {% if is_granted('ROLE_CLIENT') or is_granted('ROLE_ADMIN') %}
+        <p>Vous êtes client, vous pouvez :</p>
         <ul>
-            <li>Vous êtes client, vous pouvez :</li>
             <li>vous déconnecter</li>
             <li>gérer votre profil</li>
             <li><a href="{{ path('accueil_index') }}">aller à la page d’accueil</a></li>
             <li>lister les produits</li>
             <li>gérer le panier</li>
         </ul>
-    {% elseif user == 'ROLE_ADMIN' %}
-        <ul>
-            <li>Vous êtes administrateur, vous pouvez :</li>
-            <li>gérer les clients></li>
-            <li>créer un produit</li>
-            <li><a href="https://fr.wikipedia.org/wiki/Pong">lien vers un site extérieur</a></li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <p>---</p> {# Séparateur pour plus de clarté #}
+                <p>Vous êtes aussi administrateur, vous pouvez :</p>
+                <ul>
+                <li>gérer les clients</li>
+                <li>créer un produit</li>
+                <li><a href="https://fr.wikipedia.org/wiki/Pong" target="_blank" rel="noopener noreferrer">lien vers un site extérieur</a></li>
+            {% endif %}
         </ul>
-    {% elseif user == 'ROLE_SUPER_ADMIN' %}
+    {% elseif is_granted('ROLE_SUPER_ADMIN') %}
         <ul>
             <li>Vous êtes super administrateur, vous pouvez :</li>
             <li><a href="{{ path('accueil_index') }}">aller à la page d’accueil</a></li>
@@ -28,15 +31,15 @@
         <ul>
             <li>Vous êtes non authentifié, vous pouvez :</li>
             <li><a href="{{ path('accueil_index') }}">aller à la page d’accueil</a></li>
-            <li><a href="{{ path('app_login') }}">vous connectez</a></li>
+            <li><a href="{{ path('app_login') }}">vous connecter</a></li>
             <li>Créer un compte</li>
         </ul>
-
     {% endif %}
 
     {# Afficher le panier pour les utilisateurs connectés, sauf ROLE_ADMIN #}
-    {% if user == 'ROLE_USER' and articleCount > 0 %}
-        <li><a href="{{ path('panier') }}">Panier ({{ articleCount }} articles)</a></li>
+    {% if is_granted('ROLE_USER') and articleCount > 0 %}
+        <ul>
+            <li><a href="{{ path('panier') }}">Panier ({{ articleCount }} articles)</a></li>
+        </ul>
     {% endif %}
-
 </div>
