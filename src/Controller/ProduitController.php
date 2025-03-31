@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-final class ProduitController extends AbstractController
+final class     ProduitController extends AbstractController
 {
     #[Route('/produit', name: 'app_produit')]
     public function index(): Response
@@ -21,7 +21,7 @@ final class ProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/produit/ajout', name: 'produit_ajout')]
+    #[Route('/admin/produit/ajout', name: '_produit_ajout')]
     public function ajouter(Request $request, EntityManagerInterface $em, Security $security): Response
     {
         $user = $security->getUser();

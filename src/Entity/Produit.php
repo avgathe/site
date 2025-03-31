@@ -96,21 +96,21 @@ class Produit
         return $this->pays;
     }
 
-    public function addPay(Pays $pay): static
+    public function addPays(Pays $pays): static
     {
-        if (!$this->pays->contains($pay)) {
-            $this->pays->add($pay);
+        if (!$this->pays->contains($pays)) {
+            $this->pays[] = $pays;
         }
 
         return $this;
     }
 
-    public function removePay(Pays $pay): static
+    public function removePays(Pays $pays): static
     {
-        $this->pays->removeElement($pay);
-
+        $this->pays->removeElement($pays);
         return $this;
     }
+
 
     public function getPaniers(): Collection
     {

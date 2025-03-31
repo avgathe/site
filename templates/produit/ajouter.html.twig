@@ -1,10 +1,10 @@
 {% extends 'Layouts/layout_vente.html.twig' %}
 
-{% block contenu %}
+{% block vue %}
     <h1>Ajouter un produit</h1>
 
     {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">Ajouter</button>
+        {{ form_widget(form) }}
+        <button class="btn">Ajouter</button>
     {{ form_end(form) }}
 {% endblock %}
