@@ -39,10 +39,10 @@ class AppFixtures extends Fixture
 
         // --- Création des 4 utilisateurs requis ---
         $users = [
-            ['login' => 'sadmin', 'password' => 'nimdas', 'role' => 'ROLE_SUPER_ADMIN', 'nom' => 'Admin', 'prenom' => 'Super', 'admin' => false],
-            ['login' => 'gilles', 'password' => 'sellig', 'role' => 'ROLE_ADMIN', 'nom' => 'Subrenat', 'prenom' => 'Gilles', 'admin' => true],
-            ['login' => 'rita', 'password' => 'atir', 'role' => 'ROLE_CLIENT', 'nom' => 'Zrour', 'prenom' => 'Rita', 'admin' => false],
-            ['login' => 'boumediene', 'password' => 'eneidemuob', 'role' => 'ROLE_CLIENT', 'nom' => 'Saidi', 'prenom' => 'Boumediene', 'admin' => false],
+            ['login' => 'sadmin', 'password' => 'nimdas', 'role' => ['ROLE_SUPER_ADMIN'], 'nom' => 'Admin', 'prenom' => 'Super', 'admin' => false],
+            ['login' => 'gilles', 'password' => 'sellig', 'role' => ['ROLE_ADMIN','ROLE_CLIENT'], 'nom' => 'Subrenat', 'prenom' => 'Gilles', 'admin' => true],
+            ['login' => 'rita', 'password' => 'atir', 'role' => ['ROLE_CLIENT'], 'nom' => 'Zrour', 'prenom' => 'Rita', 'admin' => false],
+            ['login' => 'boumediene', 'password' => 'eneidemuob', 'role' => ['ROLE_CLIENT'], 'nom' => 'Saidi', 'prenom' => 'Boumediene', 'admin' => false],
         ];
 
         foreach ($users as $u) {
@@ -52,7 +52,7 @@ class AppFixtures extends Fixture
             $user->setPrenom($u['prenom']);
             $user->setIsAdmin($u['admin']);
             $user->setDateNaissance(new \DateTime('1990-01-01')); // fixe pour les tests
-            $user->setRoles([$u['role']]);
+            $user->setRoles($u['role']);
             $user->setPassword($this->hasher->hashPassword($user, $u['password']));
             // On associe tous les utilisateurs à la France par défaut
             $user->setPays($france);
