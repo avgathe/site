@@ -19,13 +19,7 @@ class ProduitType extends AbstractType
         $builder
             ->add('libelle')
             ->add('prix')
-            ->add('stock')
-            ->add('pays', EntityType::class, [
-                'class' => Pays::class,
-                'choice_label' => 'nom',
-                'multiple' => true,
-                'expanded' => true,
-            ]);
+            ->add('stock');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

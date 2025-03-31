@@ -1,0 +1,38 @@
+{% extends 'Layouts/layout_vente.html.twig' %}
+
+{% block vue %}
+    <h1>Gestion des administrateurs</h1>
+
+    <table border="1" cellpadding="6" cellspacing="0">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Rôle</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in utilisateurs %}
+            <tr>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.prenom }}</td>
+                <td>
+                    {% if 'ROLE_ADMIN' in user.roles %}
+                        Administrateur
+                    {% else %}
+                        Client
+                    {% endif %}
+                </td>
+                <td>
+                    {% if 'ROLE_ADMIN' in user.roles %}
+                        <a href="{{ path('admin_retrograder', {'id': user.id}) }}">Rétrograder</a>
+                    {% else %}
+                        <a href="{{ path('admin_promouvoir', {'id': user.id}) }}">Promouvoir</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

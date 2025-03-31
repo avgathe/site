@@ -25,7 +25,7 @@
             <li><a href="{{ path('accueil_index') }}">aller à la page d’accueil</a></li>
             <li><a href="{{ path('form_edit_profil') }}">gérer votre profil</a></li>
             <li><a href="{{ path('app_logout') }}">vous déconnecter</a></li>
-            <li>Créer un super administrateur</li>
+            <li><a href="{{ path('admin_gestion_admins') }}">Gérer les administrateurs</a></li>
         </ul>
     {% else %}
         <ul>
@@ -42,4 +42,13 @@
             <li><a href="{{ path('panier') }}">Panier ({{ articleCount }} articles)</a></li>
         </ul>
     {% endif %}
+    <p>
+        🛒 Panier
+        {% if articleCount > 0 %}
+            ({{ articleCount }} article{% if articleCount > 1 %}s{% endif %})
+        {% else %}
+            (vide)
+        {% endif %}
+    </p>
+
 </div>

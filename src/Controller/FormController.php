@@ -41,7 +41,7 @@ class FormController extends AbstractController
 
             // Message flash et redirection
             $this->addFlash('info', 'Le client a été ajouté avec succès !');
-            return $this->redirectToRoute('Accueil/index.html.twig');
+            return $this->redirectToRoute('accueil_index');
         }
 
         // Affichage du formulaire
