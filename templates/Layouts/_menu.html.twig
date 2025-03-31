@@ -1,3 +1,42 @@
 <div id="menu">
-    menu
+<h2>Menu</h2>
+    {% if user == 'ROLE_CLIENT' %}
+        <ul>
+            <li>Vous êtes client, vous pouvez :</li>
+            <li>vous déconnecter</li>
+            <li>gérer votre profil</li>
+            <li><a href="{{ path('accueil_index') }}">aller à la page d’accueil</a></li>
+            <li>lister les produits</li>
+            <li>gérer le panier</li>
+        </ul>
+    {% elseif user == 'ROLE_ADMIN' %}
+        <ul>
+            <p>Vous êtes administrateur, vous pouvez :</p>
+            <li>gérer les clients></li>
+            <li>créer un produit</li>
+            <li><a href="https://fr.wikipedia.org/wiki/Pong">lien vers un site extérieur</a></li>
+        </ul>
+    {% elseif user == 'ROLE_SUPER_ADMIN' %}
+        <ul>
+            <li>Vous êtes super administrateur, vous pouvez :</li>
+            <li><a href="{{ path('accueil_index') }}">aller à la page d’accueil</a></li>
+            <li>gérer votre profil</li>
+            <li>vous déconnecter</li>
+            <li>Créer un super administrateur</li>
+        </ul>
+    {% else %}
+        <ul>
+            <li>Vous êtes non authentifié, vous pouvez :</li>
+            <li><a href="{{ path('accueil_index') }}">aller à la page d’accueil</a></li>
+            <li><a href="{{ path('app_login') }}">vous connectez</a></li>
+            <li>Créer un compte</li>
+        </ul>
+
+    {% endif %}
+
+    {# Afficher le panier pour les utilisateurs connectés, sauf ROLE_ADMIN #}
+    {% if user == 'ROLE_USER' and articleCount > 0 %}
+        <li><a href="{{ path('panier') }}">Panier ({{ articleCount }} articles)</a></li>
+    {% endif %}
+
 </div>
