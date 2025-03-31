@@ -14,7 +14,7 @@
                 <p>---</p> {# Séparateur pour plus de clarté #}
                 <p>Vous êtes aussi administrateur, vous pouvez :</p>
                 <ul>
-                <li>gérer les clients</li>
+                <li><a href="{{ path('admin_comptes') }}">gérer les clients</a></li>
                 <li><a href="{{ path('produit_ajout') }}">Ajouter un produit</a></li>
                 <li><a href="https://fr.wikipedia.org/wiki/Pong" target="_blank" rel="noopener noreferrer">lien vers un site extérieur</a></li>
             {% endif %}
@@ -36,19 +36,16 @@
         </ul>
     {% endif %}
 
-    {# Afficher le panier pour les utilisateurs connectés, sauf ROLE_ADMIN #}
-    {% if is_granted('ROLE_USER') and articleCount > 0 %}
-        <ul>
-            <li><a href="{{ path('panier') }}">Panier ({{ articleCount }} articles)</a></li>
-        </ul>
+
+    {% if is_granted('ROLE_CLIENT') or is_granted('ROLE_ADMIN') %}
+        <p>
+            🛒 Panier
+            {% if articleCount > 0 %}
+                ({{ articleCount }} article{% if articleCount > 1 %}s{% endif %})
+            {% else %}
+                (vide)
+            {% endif %}
+        </p>
     {% endif %}
-    <p>
-        🛒 Panier
-        {% if articleCount > 0 %}
-            ({{ articleCount }} article{% if articleCount > 1 %}s{% endif %})
-        {% else %}
-            (vide)
-        {% endif %}
-    </p>
 
 </div>

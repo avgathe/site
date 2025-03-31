@@ -42,6 +42,10 @@
         <p>
             <a href="{{ path('panier_vider') }}" class="btn btn-danger">Vider le panier</a>
         </p>
+        <form action="{{ path('panier_commander') }}" method="post">
+            <button type="submit">Commander</button>
+        </form>
+
 
     {% endif %}
 {% endblock %}

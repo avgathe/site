@@ -10,10 +10,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\ProduitRepository;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 
 class PanierController extends AbstractController
 {
+    #[isGranted('ROLE_CLIENT')]
     #[Route('/panier', name: 'panier_index')]
     public function index(Security $security): Response
     {
@@ -156,6 +158,40 @@ class PanierController extends AbstractController
         $em->flush();
         $this->addFlash('success', 'Panier mis à jour.');
         return $this->redirectToRoute('produit_liste');
+    }
+
+    #[Route('/panier/commander', name: 'panier_commander')]
+    public function commander(Security $security, EntityManagerInterface $em): Response
+    {
+        $user = $security->getUser();
+
+        if (!$user) {
+            $this->addFlash('danger', 'Vous devez être connecté pour commander.');
+            return $this->redirectToRoute('app_login');
+        }
+
+        $paniers = $user->getPaniers();
+
+        foreach ($paniers as $panier) {
+            $produit = $panier->getProduit();
+            $quantiteCommandee = $panier->getQuantite();
+
+            if ($produit->getStock() < $quantiteCommandee) {
+                $this->addFlash('danger', "Le produit \"{$produit->getNom()}\" n'a pas assez de stock.");
+                return $this->redirectToRoute('afficher_panier'); // à adapter si besoin
+            }
+
+            // Mise à jour du stock
+            $produit->setStock($produit->getStock() - $quantiteCommandee);
+
+            // Suppression du panier
+            $em->remove($panier);
+        }
+
+        $em->flush();
+
+        $this->addFlash('success', 'Commande validée ! Merci pour votre achat.');
+        return $this->redirectToRoute('accueil_index');
     }
 
 

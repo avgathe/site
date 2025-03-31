@@ -10,10 +10,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
 
-#[IsGranted('ROLE_SUPER_ADMIN')]
+
 class AdminController extends AbstractController
 {
-
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     #[Route('/admin/gestion-admins', name: 'admin_gestion_admins')]
     public function gestionAdmins(UserRepository $userRepository): Response
     {
@@ -23,7 +23,7 @@ class AdminController extends AbstractController
             'utilisateurs' => $utilisateurs,
         ]);
     }
-
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     #[Route('/admin/promouvoir/{id}', name: 'admin_promouvoir')]
     public function promouvoir(User $user, EntityManagerInterface $em): Response
     {
@@ -39,7 +39,7 @@ class AdminController extends AbstractController
 
         return $this->redirectToRoute('admin_gestion_admins');
     }
-
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     #[Route('/admin/retrograder/{id}', name: 'admin_retrograder')]
     public function retrograder(User $user, EntityManagerInterface $em): Response
     {
@@ -51,6 +51,32 @@ class AdminController extends AbstractController
 
         return $this->redirectToRoute('admin_gestion_admins');
     }
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/admin/comptes', name: 'admin_comptes')]
+    public function listeUtilisateurs(UserRepository $userRepository): Response
+    {
+        $users = $userRepository->findAll();
+
+        return $this->render('admin/comptes.html.twig', [
+            'users' => $users,
+        ]);
+    }
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/admin/utilisateur/{id}/supprimer', name: 'admin_utilisateur_supprimer')]
+    public function supprimerUtilisateur(User $user, EntityManagerInterface $em): Response
+    {
+        if (in_array('ROLE_SUPER_ADMIN', $user->getRoles())) {
+            $this->addFlash('danger', 'Impossible de supprimer un super administrateur.');
+            return $this->redirectToRoute('admin_comptes');
+        }
+
+        $em->remove($user);
+        $em->flush();
+
+        $this->addFlash('success', 'Utilisateur supprimé avec succès.');
+        return $this->redirectToRoute('admin_comptes');
+    }
+
 
 
 }

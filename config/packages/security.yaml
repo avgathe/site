@@ -40,6 +40,7 @@ security:
         # Easy way to control access for large sections of your site
         # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/panier/commander, roles: ROLE_CLIENT }
         - { path: ^/$, roles: PUBLIC_ACCESS }
         - { path: ^/login$, roles: PUBLIC_ACCESS }
         - { path: ^/form/edit/client$, roles: PUBLIC_ACCESS } # Autorise l'accès à cette route pour les non authentifiés

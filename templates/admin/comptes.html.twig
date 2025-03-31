@@ -1,0 +1,22 @@
+<h1>Gestion des comptes utilisateurs</h1>
+
+<table>
+    <tr>
+        <th>Nom</th>
+        <th>Rôles</th>
+        <th>Actions</th>
+    </tr>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.nom }}</td>
+            <td>{{ user.roles|join(', ') }}</td>
+            <td>
+                {% if 'ROLE_SUPER_ADMIN' not in user.roles %}
+                    <a href="{{ path('admin_utilisateur_supprimer', { id: user.id }) }}">Supprimer</a>
+                {% else %}
+                    <em>Non supprimable</em>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+</table>

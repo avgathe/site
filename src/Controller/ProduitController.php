@@ -103,16 +103,33 @@ final class ProduitController extends AbstractController
             return $this->redirectToRoute('accueil_index');
         }
 
+
         $produit = new Produit();
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
+
+        if ($produit->getPrix() < 0) {
+            $this->addFlash('danger', 'Le prix ne peut pas être négatif.');
+            return $this->render('produit/ajouter.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        }
+
+
+        if ($produit->getStock() < 0) {
+            $this->addFlash('danger', 'Le stock ne peut pas être négatif.');
+            return $this->render('produit/ajouter.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        }
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($produit);
             $em->flush();
 
             $this->addFlash('success', 'Produit ajouté avec succès !');
-            return $this->redirectToRoute('produit_ajout');
+            return $this->redirectToRoute('accueil_index'); // ou autre route
         }
 
         return $this->render('produit/ajouter.html.twig', [
