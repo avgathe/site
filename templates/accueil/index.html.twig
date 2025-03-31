@@ -10,7 +10,11 @@
 
 {% block vue %}
     <h1>Bienvenue sur le site de vente de produits</h1>
-
+    {% if app.user %}
+        <div class="mb-3">
+            Vous êtes connectés en tant que {{ app.user.userIdentifier }},
+        </div>
+    {% endif %}
     <p>Votre rôle : </p>
     <ul>
         {% for role in roles %}
