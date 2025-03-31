@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
+
 class AccueilController extends AbstractController
 {
     #[Route('/', name: 'accueil_index')]
