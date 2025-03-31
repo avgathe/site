@@ -16,13 +16,14 @@ class ModifierProfilType extends AbstractType
     {
         $builder
             ->add('login', null, [
-                'label' => 'Login / Email',
+                'label' => 'Login',
                 'constraints' => [
                     new Assert\NotBlank(['message' => 'Le login est obligatoire.']),
                 ],
             ])
             ->add('password', null, [
-                'label' => 'Mot de passe',
+                'label' => 'Mot de passe, laisser vide si vous ne souhaitez pas le modifier.',
+                'mapped' => false,
                 'required' => false, // Le champ peut rester vide si l'utilisateur ne souhaite pas le modifier
             ])
             ->add('nom', null, [

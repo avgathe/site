@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\ProduitRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,10 +20,13 @@ class Produit
     private ?string $libelle = null;
 
     #[ORM\Column]
+    #[Assert\Positive(message: "Le prix unitaire doit être positif.")]
     private ?float $prix = null;
 
     #[ORM\Column]
+    #[Assert\Positive(message: "La quantité en stock doit être positive.")]
     private ?int $stock = null;
+
 
     /**
      * @var Collection<int, Pays>

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\CreationCompteClientType;
+use App\Form\ModifierProfilType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,9 +27,22 @@ class FormController extends AbstractController
         // Traitement de la requête
         $form->handleRequest($request);
 
+
+
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($user->getLogin() === $form->get('password')->getData()) {
+                $this->addFlash('error', 'Le mot de passe ne peut pas être identique au login.');
+                return $this->render('form/user_edit.html.twig', [
+                    'form' => $form->createView(),
+                ]); // réaffiche le formulaire
+            }
+
             // Hacher le mot de passe utilisateur
-            $hashedPassword = $passwordHasher->hashPassword($user, $user->getPassword());
+            $plainPassword = $form->get('password')->getData();
+            $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
+
             $user->setPassword($hashedPassword);
 
             // Contraintes supplémentaires
@@ -64,7 +78,7 @@ class FormController extends AbstractController
         }
 
         // Créer le formulaire avec les données pré-remplies de l'utilisateur
-        $form = $this->createForm(CreationCompteClientType::class, $user, [
+        $form = $this->createForm(ModifierProfilType::class, $user, [
             'validation_groups' => ['Default'], // Groupe de validation pour vérifier l'unicité du login
         ]);
 
@@ -72,9 +86,9 @@ class FormController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Vérifier si un nouveau mot de passe a été saisi
-            if ($password = $user->getPassword()) {
-                // Hacher le nouveau mot de passe
-                $hashedPassword = $passwordHasher->hashPassword($user, $password);
+            $plainPassword = $form->get('password')->getData();
+            if (!empty($plainPassword)) {
+                $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
                 $user->setPassword($hashedPassword);
             }
 
