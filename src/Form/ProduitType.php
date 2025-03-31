@@ -17,16 +17,14 @@ class ProduitType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('libelle', TextType::class)
-            ->add('prix', MoneyType::class, [
-                'currency' => 'EUR'
-            ])
-            ->add('stock', IntegerType::class)
+            ->add('libelle')
+            ->add('prix')
+            ->add('stock')
             ->add('pays', EntityType::class, [
                 'class' => Pays::class,
                 'choice_label' => 'nom',
                 'multiple' => true,
-                'expanded' => true // false pour liste déroulante
+                'expanded' => true,
             ]);
     }
 

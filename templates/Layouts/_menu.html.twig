@@ -5,7 +5,7 @@
         <p>Vous êtes client, vous pouvez :</p>
         <ul>
             <li><a href="{{ path('app_logout') }}">vous déconnecter</a></li>
-            <li>gérer votre profil</li>
+            <li><a href="{{ path('form_edit_profil') }}">gérer votre profil</a></li>
             <li><a href="{{ path('accueil_index') }}">aller à la page d’accueil</a></li>
             <li>lister les produits</li>
             <li>gérer le panier</li>
@@ -23,7 +23,7 @@
         <ul>
             <li>Vous êtes super administrateur, vous pouvez :</li>
             <li><a href="{{ path('accueil_index') }}">aller à la page d’accueil</a></li>
-            <li>gérer votre profil</li>
+            <li><a href="{{ path('form_edit_profil') }}">gérer votre profil</a></li>
             <li><a href="{{ path('app_logout') }}">vous déconnecter</a></li>
             <li>Créer un super administrateur</li>
         </ul>

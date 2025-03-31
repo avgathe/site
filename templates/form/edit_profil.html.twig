@@ -1,0 +1,12 @@
+{% extends 'Layouts/layout_vente.html.twig' %}
+
+{% block title %}Modifier votre profil{% endblock %}
+
+{% block vue %}
+    <h2>Modification de votre profil</h2>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-primary">Valider</button>
+    {{ form_end(form) }}
+{% endblock %}
