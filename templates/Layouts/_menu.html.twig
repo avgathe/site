@@ -8,7 +8,7 @@
             <li>gérer votre profil</li>
             <li><a href="{{ path('accueil_index') }}">aller à la page d’accueil</a></li>
             <li><a href="{{ path('produit_liste') }}">Voir les produits</a></li>
-            <li>gérer le panier</li>
+            <li><a href="{{ path('panier_index') }}">Voir mon panier</a></li>
         </ul>
             {% if is_granted('ROLE_ADMIN') %}
                 <p>---</p> {# Séparateur pour plus de clarté #}

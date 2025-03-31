@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Produit;
 use App\Form\ProduitType;
+use App\Entity\Panier;
 use Symfony\Bundle\SecurityBundle\Security;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,6 +35,49 @@ final class ProduitController extends AbstractController
         ]);
     }
 
+    #[Route('/panier/ajouter/{id}', name: 'panier_ajouter')]
+    public function ajouterAuPanier(int $id, ProduitRepository $produitRepository, Security $security, EntityManagerInterface $em): Response
+    {
+        $user = $security->getUser();
+
+        /** @var \App\Entity\User $user */
+        if (!$user) {
+            $this->addFlash('error', 'Vous devez être connecté pour ajouter un produit au panier.');
+            return $this->redirectToRoute('app_login');
+        }
+
+
+        $produit = $produitRepository->find($id);
+
+
+        if (!$produit) {
+            throw $this->createNotFoundException('Produit introuvable');
+        }
+
+        if ($produit->getStock() < 1) {
+            $this->addFlash('error', 'Ce produit est actuellement en rupture de stock.');
+            return $this->redirectToRoute('produit_liste');
+        }
+
+
+        // Vérifier si le produit est déjà dans le panier du user
+        $panier = $user->getPaniers()->filter(fn($p) => $p->getProduit() === $produit)->first() ?: null;
+
+        if ($panier) {
+            $panier->setQuantite($panier->getQuantite() + 1);
+        } else {
+            $panier = new Panier();
+            $panier->setClient($user);
+            $panier->setProduit($produit);
+            $panier->setQuantite(1);
+            $em->persist($panier);
+        }
+
+        $em->flush();
+
+        $this->addFlash('success', 'Produit ajouté au panier !');
+        return $this->redirectToRoute('produit_liste');
+    }
 
 
     #[Route('/admin/produit/ajout', name: 'produit_ajout')]

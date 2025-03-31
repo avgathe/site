@@ -1,0 +1,43 @@
+{% extends 'Layouts/layout_vente.html.twig' %}
+
+{% block vue %}
+    <h1>Mon panier</h1>
+
+    {% if paniers|length == 0 %}
+        <p>Votre panier est vide.</p>
+    {% else %}
+        <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Prix unitaire</th>
+                <th>Quantité</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set total = 0 %}
+            {% for ligne in paniers %}
+                {% set totalLigne = ligne.produit.prix * ligne.quantite %}
+                {% set total = total + totalLigne %}
+                <tr>
+                    <td>{{ ligne.produit.libelle }}</td>
+                    <td>{{ ligne.produit.prix }} €</td>
+                    <td>{{ ligne.quantite }}</td>
+                    <td>{{ totalLigne }} €</td>
+                    <td>
+                        <a href="{{ path('panier_retirer', {'id': ligne.id}) }}">Retirer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3"><strong>Total général</strong></td>
+                <td><strong>{{ total }} €</strong></td>
+            </tr>
+
+
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

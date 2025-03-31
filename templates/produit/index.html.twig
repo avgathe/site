@@ -10,6 +10,7 @@
             <th>Prix</th>
             <th>Stock</th>
             <th>Pays</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -23,6 +24,18 @@
                         {{ pays.nom }}{% if not loop.last %}, {% endif %}
                     {% endfor %}
                 </td>
+                <td>
+                    {% if app.user %}
+                        {% if produit.stock > 0 %}
+                            <a href="{{ path('panier_ajouter', {'id': produit.id}) }}">Ajouter au panier</a>
+                        {% else %}
+                            <em>Rupture de stock</em>
+                        {% endif %}
+                    {% else %}
+                        <em>Connexion requise</em>
+                    {% endif %}
+                </td>
+
             </tr>
         {% endfor %}
         </tbody>
