@@ -91,7 +91,7 @@ class FormController extends AbstractController
                 return $this->redirectToRoute('accueil_index'); // Page d'accueil pour les super-administrateurs
             } else {
                 $this->addFlash('success', 'Votre profil a été mis à jour avec succès !');
-                return $this->redirectToRoute('_produit_ajout'); // Page de listing pour les autres utilisateurs
+                return $this->redirectToRoute('accueil_index'); // Page de listing pour les autres utilisateurs
             }
         }
 

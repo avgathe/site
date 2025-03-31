@@ -24,17 +24,33 @@
                         {{ pays.nom }}{% if not loop.last %}, {% endif %}
                     {% endfor %}
                 </td>
-                <td>
-                    {% if app.user %}
-                        {% if produit.stock > 0 %}
-                            <a href="{{ path('panier_ajouter', {'id': produit.id}) }}">Ajouter au panier</a>
-                        {% else %}
-                            <em>Rupture de stock</em>
-                        {% endif %}
-                    {% else %}
-                        <em>Connexion requise</em>
+                {% set m = 0 %}
+                {% for panier in app.user.paniers %}
+                    {% if panier.produit.id == produit.id %}
+                        {% set m = panier.quantite %}
                     {% endif %}
-                </td>
+                {% endfor %}
+
+                {% set n = produit.stock %}
+
+                {% if m == 0 and n == 0 %}
+                    <td><em>Indisponible</em></td>
+                {% else %}
+                    <td>
+                        <form action="{{ path('panier_modifier') }}" method="post">
+                            <input type="hidden" name="produit_id" value="{{ produit.id }}">
+                            <label for="quantite-{{ produit.id }}" class="visually-hidden">Quantité</label>
+                            <select id="quantite-{{ produit.id }}" name="quantite">
+                                {% for i in range(-m, n) %}
+                                    <option value="{{ i }}" {% if i == 0 %}selected{% endif %}>{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit">Modifier</button>
+                        </form>
+
+                    </td>
+                {% endif %}
+
 
             </tr>
         {% endfor %}

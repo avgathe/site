@@ -64,15 +64,15 @@ class AppFixtures extends Fixture
         $produit1->setLibelle('Banane');
         $produit1->setPrix(1.99);
         $produit1->setStock(20);
-        $produit1->addPay($france);
-        $produit1->addPay($espagne);
+        $produit1->addPays($france);
+        $produit1->addPays($espagne);
 
         $produit2 = new Produit();
         $produit2->setLibelle('Cerise');
         $produit2->setPrix(2.49);
         $produit2->setStock(15);
-        $produit2->addPay($france);
-        $produit2->addPay($japon);
+        $produit2->addPays($france);
+        $produit2->addPays($japon);
 
         $manager->persist($produit1);
         $manager->persist($produit2);
