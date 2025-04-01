@@ -173,17 +173,8 @@ class PanierController extends AbstractController
         $paniers = $user->getPaniers();
 
         foreach ($paniers as $panier) {
-            $produit = $panier->getProduit();
-            $quantiteCommandee = $panier->getQuantite();
 
-            if ($produit->getStock() < $quantiteCommandee) {
-                $this->addFlash('danger', "Le produit \"{$produit->getNom()}\" n'a pas assez de stock.");
-                return $this->redirectToRoute('afficher_panier'); // à adapter si besoin
-            }
-
-            // Mise à jour du stock
-            $produit->setStock($produit->getStock() - $quantiteCommandee);
-
+            //nul besoin de vérifier la quantité en stock car la sélection du nombre d'articles empêche de commander plus qu'il n'y a d'articles en stock
             // Suppression du panier
             $em->remove($panier);
         }

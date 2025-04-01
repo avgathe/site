@@ -62,6 +62,7 @@ class Produit
 
     public function setLibelle(string $libelle): static
     {
+
         $this->libelle = $libelle;
 
         return $this;
