@@ -10,11 +10,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
 
-
+#[Route('/admin', name:'admin')]
 class AdminController extends AbstractController
 {
     #[IsGranted('ROLE_SUPER_ADMIN')]
-    #[Route('/admin/gestion-admins', name: 'admin_gestion_admins')]
+    #[Route('/gestion-admins', name: '_gestion_admins')]
     public function gestionAdmins(UserRepository $userRepository): Response
     {
         $utilisateurs = $userRepository->findAll();
@@ -24,7 +24,7 @@ class AdminController extends AbstractController
         ]);
     }
     #[IsGranted('ROLE_SUPER_ADMIN')]
-    #[Route('/admin/promouvoir/{id}', name: 'admin_promouvoir')]
+    #[Route('/promouvoir/{id}', name: '_promouvoir')]
     public function promouvoir(User $user, EntityManagerInterface $em): Response
     {
         $roles = $user->getRoles();
@@ -40,7 +40,7 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin_gestion_admins');
     }
     #[IsGranted('ROLE_SUPER_ADMIN')]
-    #[Route('/admin/retrograder/{id}', name: 'admin_retrograder')]
+    #[Route('/retrograder/{id}', name: '_retrograder')]
     public function retrograder(User $user, EntityManagerInterface $em): Response
     {
         $roles = array_filter($user->getRoles(), fn($role) => $role !== 'ROLE_ADMIN');
@@ -52,7 +52,7 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin_gestion_admins');
     }
     #[IsGranted('ROLE_ADMIN')]
-    #[Route('/admin/comptes', name: 'admin_comptes')]
+    #[Route('/comptes', name: '_comptes')]
     public function listeUtilisateurs(UserRepository $userRepository): Response
     {
         $users = $userRepository->findAll();
@@ -62,7 +62,7 @@ class AdminController extends AbstractController
         ]);
     }
     #[IsGranted('ROLE_ADMIN')]
-    #[Route('/admin/utilisateur/{id}/supprimer', name: 'admin_utilisateur_supprimer')]
+    #[Route('/utilisateur/{id}/supprimer', name: '_utilisateur_supprimer')]
     public function supprimerUtilisateur(User $user, EntityManagerInterface $em): Response
     {
         if (in_array('ROLE_SUPER_ADMIN', $user->getRoles())) {

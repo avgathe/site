@@ -46,6 +46,7 @@ security:
         - { path: ^/form/edit/client$, roles: PUBLIC_ACCESS } # Autorise l'accès à cette route pour les non authentifiés
         - { path: ^/panier, roles: ROLE_CLIENT }
         - { path: ^/produit/liste, roles: ROLE_CLIENT }
+        - { path: ^/produit/ajout, roles: ROLE_ADMIN }
         - { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }       # autres pages : nécessité d'être authentifié
 
 

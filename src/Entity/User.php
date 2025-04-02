@@ -10,11 +10,13 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'l3_users')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_LOGIN', fields: ['login'])]
 #[UniqueEntity(fields: ['login'], message: 'ce login est déja utilisé')]
+#[UniqueEntity(fields: ['nom', 'prenom'], message: 'vous avez un homonyme, modifier votre nom ou votre prénom')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -35,6 +37,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotEqualTo(propertyPath: "login", message: "votre mot de passe doit être différent de votre login")]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
@@ -45,6 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateNaissance = null;
+
 
     #[ORM\Column]
     private ?bool $isAdmin = null;
@@ -206,5 +210,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 
 }

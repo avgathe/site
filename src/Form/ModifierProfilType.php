@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\LessThan;
 
 class ModifierProfilType extends AbstractType
 {
@@ -42,6 +43,9 @@ class ModifierProfilType extends AbstractType
                 'label' => 'Date de naissance',
                 'widget' => 'single_text',
                 'required' => false,
+                'constraints' => [
+                    new LessThan(['value' => 'today', 'message' => 'La date de naissance doit être dans le passé.'])
+                ],
             ])
             ->add('pays', EntityType::class, [
                 'class' => Pays::class,

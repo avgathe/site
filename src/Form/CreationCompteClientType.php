@@ -9,6 +9,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\LessThan;
+
 
 class CreationCompteClientType extends AbstractType
 {
@@ -16,7 +18,8 @@ class CreationCompteClientType extends AbstractType
     {
         $builder
             ->add('login')
-            ->add('password', PasswordType::class, [ // Mot de passe non haché
+            ->add('password', PasswordType::class, [
+                'label' => 'Mot de passe',
                 'mapped' => false,
                 'constraints' => [
                     new Length([
@@ -31,7 +34,11 @@ class CreationCompteClientType extends AbstractType
             ->add('nom') // Nom
             ->add('prenom') // Prénom
             ->add('dateNaissance', null, [
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'required' => true,
+                'constraints' => [
+                    new LessThan(['value' => 'today', 'message' => 'La date de naissance doit être dans le passé.'])
+                ],
             ])
             ->add('pays', EntityType::class, [
                 'class' => Pays::class,

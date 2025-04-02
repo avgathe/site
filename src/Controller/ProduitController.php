@@ -17,17 +17,10 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class ProduitController extends AbstractController
 {
-    #[Route('/produit', name: 'app_produit')]
-    public function index(): Response
-    {
-        return $this->render('produit/index.html.twig', [
-            'controller_name' => 'ProduitController',
-        ]);
-    }
 
     #[Route('/produit/liste', name: 'produit_liste')]
     #[isGranted('ROLE_CLIENT')]
-    public function liste(ProduitRepository $produitRepository): Response
+    public function listeAction(ProduitRepository $produitRepository): Response
     {
         $produits = $produitRepository->findAll();
 
@@ -37,7 +30,7 @@ final class ProduitController extends AbstractController
     }
 
     #[Route('/panier/ajouter/{id}', name: 'panier_ajouter', methods: ['POST'])]
-    public function ajouterAuPanier(
+    public function ajouterAuPanierAction(
         int $id,
         Request $request,
         ProduitRepository $produitRepository,
@@ -88,8 +81,9 @@ final class ProduitController extends AbstractController
 
 
 
-    #[Route('/admin/produit/ajout', name: 'produit_ajout')]
-    public function ajouter(Request $request, EntityManagerInterface $em, Security $security): Response
+    #[Route('produit/ajout', name: 'produit_ajout')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function ajouterAction(Request $request, EntityManagerInterface $em, Security $security): Response
     {
         $user = $security->getUser();
 

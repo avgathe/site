@@ -28,6 +28,13 @@ class FormController extends AbstractController
 
         $form->handleRequest($request);
 
+        if ($user->getLogin() === $form->get('password')->getData()) {
+            $this->addFlash('info', 'Le mot de passe ne peut pas être identique au login.');
+
+            return $this->render('form/edit_client.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
 
