@@ -18,6 +18,10 @@ class FormController extends AbstractController
     #[Route('/edit/client', name: '_edit_client')]
     public function ajouterClientAction(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
+        if ($this->getUser()) {
+            $this->addFlash('info', 'Vous avez déja un compte.');
+            return $this->redirectToRoute('accueil_index');
+        }
         $user = new User();
 
         $form = $this->createForm(CreationCompteClientType::class, $user);
