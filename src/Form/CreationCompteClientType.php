@@ -15,7 +15,7 @@ class CreationCompteClientType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('login') // Login utilisateur
+            ->add('login')
             ->add('password', PasswordType::class, [ // Mot de passe non haché
                 'mapped' => false,
                 'constraints' => [
@@ -30,13 +30,13 @@ class CreationCompteClientType extends AbstractType
 
             ->add('nom') // Nom
             ->add('prenom') // Prénom
-            ->add('dateNaissance', null, [ // Date de naissance avec un widget simple
+            ->add('dateNaissance', null, [
                 'widget' => 'single_text'
             ])
-            ->add('pays', EntityType::class, [ // Pays est facultatif
+            ->add('pays', EntityType::class, [
                 'class' => Pays::class,
-                'choice_label' => 'nom', // Affiche le nom du pays
-                'required' => false    // Champ non obligatoire
+                'choice_label' => 'nom',
+                'required' => false
             ])
         ;
     }
@@ -44,7 +44,7 @@ class CreationCompteClientType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class, // La classe liée au formulaire
+            'data_class' => User::class,
         ]);
     }
 }

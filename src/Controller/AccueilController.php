@@ -27,7 +27,6 @@ class AccueilController extends AbstractController
 
     public function menuAction(Security $security, PanierService $panierService): Response
     {
-        // Récupération de l'utilisateur via le composant Security
         $user = $security->getUser();
         $articleCount = 0;
 

@@ -24,7 +24,7 @@ class ModifierProfilType extends AbstractType
             ->add('password', null, [
                 'label' => 'Mot de passe, laisser vide si vous ne souhaitez pas le modifier.',
                 'mapped' => false,
-                'required' => false, // Le champ peut rester vide si l'utilisateur ne souhaite pas le modifier
+                'required' => false,
             ])
             ->add('nom', null, [
                 'label' => 'Nom',
@@ -40,13 +40,13 @@ class ModifierProfilType extends AbstractType
             ])
             ->add('dateNaissance', null, [
                 'label' => 'Date de naissance',
-                'widget' => 'single_text', // Widget pour un champ de date simple
-                'required' => false, // La date de naissance est facultative
+                'widget' => 'single_text',
+                'required' => false,
             ])
             ->add('pays', EntityType::class, [
                 'class' => Pays::class,
-                'choice_label' => 'nom', // Affiche le nom complet des pays
-                'required' => false, // Le choix du pays est facultatif
+                'choice_label' => 'nom',
+                'required' => false,
             ]);
     }
 

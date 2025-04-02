@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\Collection;
 #[ORM\Table(name: 'l3_users')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_LOGIN', fields: ['login'])]
-#[UniqueEntity(fields: ['login'], message: 'There is already an account with this login')]
+#[UniqueEntity(fields: ['login'], message: 'ce login est déja utilisé')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]

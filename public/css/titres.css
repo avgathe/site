@@ -1,38 +1,29 @@
 /* Styles pour colorer les titres */
-
-/* Titre principal (h1) */
 h1 {
-    color: #007bff; /* Couleur Bleu */
-    background-color: #e9f7fe; /* Fond légèrement bleu clair */
-    text-align: center; /* Centrer le texte */
-    padding: 10px; /* Ajoute des marges internes pour respirer */
-    border: 2px solid #0056b3; /* Bordure bleue foncée */
-    border-radius: 5px; /* Coins arrondis */
-    font-family: 'Arial', sans-serif; /* Police agréable et lisible */
+    color: #007bff;
+    background-color: #e9f7fe;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: 'Arial', sans-serif;
 }
 
-/* Sous-titre (h2) */
 h2 {
-    color: #28a745; /* Couleur Vert */
-    font-size: 1.8em; /* Plus petit que h1 mais mis en valeur */
-    border-bottom: 2px solid #28a745; /* Ligne de soulignement verte */
-    padding: 5px 0; /* Ajoute un petit espace vertical */
-    font-family: 'Verdana', sans-serif; /* Police légèrement différente */
+    color: #28a745;
+    font-size: 1.8em;
+    padding: 5px 0;
 }
 
-/* Titres secondaires (h3) */
 h3 {
-    color: #ffc107; /* Couleur Jaune/orangé */
-    border-left: 5px solid #ffc107; /* Barre latérale pour styliser */
-    padding-left: 10px; /* Décalage du texte par rapport à la bordure */
-    font-style: italic; /* Inclinaison pour un style unique */
+    color: #ffc107;
+    padding-left: 10px;
+    font-style: italic;
 }
 
-/* Titres plus petits (h4, h5, h6) */
 h4, h5, h6 {
-    color: #6c757d; /* Couleur Gris sombre */
-    text-transform: uppercase; /* Texte en majuscules */
-    font-weight: bold; /* Mettre le texte en gras */
-    margin-top: 10px; /* Ajoute un espace au-dessus */
-    font-size: 1.2em; /* Taille légèrement augmentée */
+    color: #6c757d;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 1.2em;
 }
