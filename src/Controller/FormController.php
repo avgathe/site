@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FormController extends AbstractController
 {
     #[Route('/edit/client', name: '_edit_client')]
-    public function ajouterClient(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    public function ajouterClientAction(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         // Instance vide de l'entité User
         $user = new User();
@@ -34,7 +34,7 @@ class FormController extends AbstractController
 
             if ($user->getLogin() === $form->get('password')->getData()) {
                 $this->addFlash('error', 'Le mot de passe ne peut pas être identique au login.');
-                return $this->render('form/user_edit.html.twig', [
+                return $this->render('form/edit_client.html.twig', [
                     'form' => $form->createView(),
                 ]); // réaffiche le formulaire
             }
@@ -59,13 +59,13 @@ class FormController extends AbstractController
         }
 
         // Affichage du formulaire
-        return $this->render('form/user_edit.html.twig', [
+        return $this->render('form/edit_client.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/profil/edit', name: '_edit_profil')]
-    public function editProfile(
+    #[Route('/edit/profil', name: '_edit_profil')]
+    public function editProfileAction(
         Request $request,
         EntityManagerInterface $entityManager,
         UserPasswordHasherInterface $passwordHasher

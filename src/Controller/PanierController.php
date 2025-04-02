@@ -17,7 +17,7 @@ class PanierController extends AbstractController
 {
     #[isGranted('ROLE_CLIENT')]
     #[Route('/panier', name: 'panier_index')]
-    public function index(Security $security): Response
+    public function indexAction(Security $security): Response
     {
         /** @var \App\Entity\User $user */
         $user = $security->getUser();
@@ -35,7 +35,7 @@ class PanierController extends AbstractController
     }
 
     #[Route('/panier/retirer/{id}', name: 'panier_retirer')]
-    public function retirer(Panier $panier, EntityManagerInterface $em, Security $security): Response
+    public function retirerAction(Panier $panier, EntityManagerInterface $em, Security $security): Response
     {
         /** @var \App\Entity\User $user */
         $user = $security->getUser();
@@ -64,7 +64,7 @@ class PanierController extends AbstractController
 
 
     #[Route('/panier/vider', name: 'panier_vider')]
-    public function vider(Security $security, EntityManagerInterface $em): Response
+    public function viderAction(Security $security, EntityManagerInterface $em): Response
     {
         /** @var \App\Entity\User $user */
         $user = $security->getUser();
@@ -92,7 +92,7 @@ class PanierController extends AbstractController
     }
 
     #[Route('/panier/modifier', name: 'panier_modifier', methods: ['POST'])]
-    public function modifier(
+    public function modifierAction(
         Request $request,
         EntityManagerInterface $em,
         ProduitRepository $produitRepository,
@@ -161,7 +161,7 @@ class PanierController extends AbstractController
     }
 
     #[Route('/panier/commander', name: 'panier_commander')]
-    public function commander(Security $security, EntityManagerInterface $em): Response
+    public function commanderAction(Security $security, EntityManagerInterface $em): Response
     {
         $user = $security->getUser();
 
