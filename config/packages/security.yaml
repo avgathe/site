@@ -21,9 +21,9 @@ security:
                 check_path: app_login
                 enable_csrf: true
             logout:
-                path: app_logout
+                path: logout
                 # where to redirect after logout
-                target: accueil_index
+                target: logout_message
                 invalidate_session: true
 
             # activate different ways to authenticate
@@ -41,6 +41,7 @@ security:
         # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/panier/commander, roles: ROLE_CLIENT }
+        - { path: ^/logout/message$, roles: PUBLIC_ACCESS }
         - { path: ^/$, roles: PUBLIC_ACCESS }
         - { path: ^/login$, roles: PUBLIC_ACCESS }
         - { path: ^/form/edit/client$, roles: PUBLIC_ACCESS } # Autorise l'accès à cette route pour les non authentifiés

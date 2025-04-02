@@ -4,7 +4,7 @@
     {% if is_granted('ROLE_CLIENT') or is_granted('ROLE_ADMIN') %}
         <p>Vous êtes client, vous pouvez :</p>
         <ul>
-            <li><a href="{{ path('app_logout') }}">vous déconnecter</a></li>
+            <li><a href="{{ path('logout') }}">vous déconnecter</a></li>
             <li><a href="{{ path('form_edit_profil') }}">gérer votre profil</a></li>
             <li><a href="{{ path('accueil_index') }}">aller à la page d’accueil</a></li>
             <li><a href="{{ path('produit_liste') }}">Voir les produits</a></li>
@@ -24,7 +24,7 @@
             <li>Vous êtes super administrateur, vous pouvez :</li>
             <li><a href="{{ path('accueil_index') }}">aller à la page d’accueil</a></li>
             <li><a href="{{ path('form_edit_profil') }}">gérer votre profil</a></li>
-            <li><a href="{{ path('app_logout') }}">vous déconnecter</a></li>
+            <li><a href="{{ path('logout') }}">vous déconnecter</a></li>
             <li><a href="{{ path('admin_gestion_admins') }}">Gérer les administrateurs</a></li>
         </ul>
     {% else %}
