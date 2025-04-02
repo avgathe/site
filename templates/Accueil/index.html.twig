@@ -1,24 +1,40 @@
 {% extends 'Layouts/layout_vente.html.twig' %}
 
-{% block title %}Bienvenue{% endblock %}
-
 {% block css %}
     {{ parent() }}
     <link rel="stylesheet" media="screen" type="text/css" title="default" href="{{ asset('css/titres.css') }}" />
 {% endblock %}
 
-
 {% block vue %}
     <h1>Bienvenue sur le site de vente de produits</h1>
+
     {% if app.user %}
         <div class="mb-3">
             Vous êtes connectés en tant que {{ app.user.userIdentifier }},
         </div>
+        {% if app.user.pays is not null %}
+            <div class="mb-3">
+                Pays : {{ app.user.pays.nom }}
+            </div>
+        {% endif %}
+    {% else %}
+        <p>Vous n'êtes pas connecté.</p>
     {% endif %}
+
     <p>Votre rôle : </p>
     <ul>
         {% for role in roles %}
-            <li>{{ role }}</li>
+            <li>
+                {% if role == 'ROLE_ADMIN' %}
+                    Administrateur
+                {% elseif role == 'ROLE_SUPER_ADMIN' %}
+                    Super-administrateur
+                {% elseif role == 'ROLE_CLIENT' %}
+                    Client
+                {% else %}
+                    Anonyme
+                {% endif %}
+            </li>
         {% endfor %}
     </ul>
 {% endblock %}
