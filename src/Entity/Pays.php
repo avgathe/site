@@ -111,7 +111,7 @@ class Pays
     {
         if (!$this->produits->contains($produit)) {
             $this->produits->add($produit);
-            $produit->addPay($this);
+            $produit->addPays($this);
         }
 
         return $this;
@@ -120,7 +120,7 @@ class Pays
     public function removeProduit(Produit $produit): static
     {
         if ($this->produits->removeElement($produit)) {
-            $produit->removePay($this);
+            $produit->removePays($this);
         }
 
         return $this;
