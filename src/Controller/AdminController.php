@@ -34,7 +34,7 @@ class AdminController extends AbstractController
             $user->setRoles($roles);
             $em->flush();
 
-            $this->addFlash('success', 'Utilisateur promu administrateur.');
+            $this->addFlash('info', 'Utilisateur promu administrateur.');
         }
 
         return $this->redirectToRoute('admin_gestion_admins');
@@ -47,7 +47,7 @@ class AdminController extends AbstractController
         $user->setRoles($roles);
 
         $em->flush();
-        $this->addFlash('success', 'Administrateur rétrogradé en client.');
+        $this->addFlash('info', 'Administrateur rétrogradé en client.');
 
         return $this->redirectToRoute('admin_gestion_admins');
     }

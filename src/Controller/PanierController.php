@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Panier;
+use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -12,18 +13,18 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Repository\ProduitRepository;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-
+#[Route('/panier', name:'panier')]
 class PanierController extends AbstractController
 {
     #[isGranted('ROLE_CLIENT')]
-    #[Route('/panier', name: 'panier_index')]
+    #[Route('', name: '_index')]
     public function indexAction(Security $security): Response
     {
-        /** @var \App\Entity\User $user */
+        /** @var User $user */
         $user = $security->getUser();
 
         if (!$user) {
-            $this->addFlash('error', 'Veuillez vous connecter pour voir votre panier.');
+            $this->addFlash('info', 'Veuillez vous connecter pour voir votre panier.');
             return $this->redirectToRoute('app_login');
         }
 
@@ -34,14 +35,14 @@ class PanierController extends AbstractController
         ]);
     }
 
-    #[Route('/panier/retirer/{id}', name: 'panier_retirer')]
+    #[Route('/retirer/{id}', name: '_retirer')]
     public function retirerAction(Panier $panier, EntityManagerInterface $em, Security $security): Response
     {
-        /** @var \App\Entity\User $user */
+        /** @var User $user */
         $user = $security->getUser();
 
         if (!$user || $panier->getClient() !== $user) {
-            $this->addFlash('error', 'Action non autorisée.');
+            $this->addFlash('info', 'Action non autorisée.');
             return $this->redirectToRoute('panier_index');
         }
 
@@ -58,19 +59,19 @@ class PanierController extends AbstractController
         $em->remove($panier);
         $em->flush();
 
-        $this->addFlash('success', 'Produit retiré du panier.');
+        $this->addFlash('info', 'Produit retiré du panier.');
         return $this->redirectToRoute('panier_index');
     }
 
 
-    #[Route('/panier/vider', name: 'panier_vider')]
+    #[Route('/vider', name: '_vider')]
     public function viderAction(Security $security, EntityManagerInterface $em): Response
     {
-        /** @var \App\Entity\User $user */
+        /** @var User $user */
         $user = $security->getUser();
 
         if (!$user) {
-            $this->addFlash('error', 'Veuillez vous connecter pour vider le panier.');
+            $this->addFlash('info', 'Veuillez vous connecter pour vider le panier.');
             return $this->redirectToRoute('app_login');
         }
 
@@ -87,22 +88,22 @@ class PanierController extends AbstractController
 
         $em->flush();
 
-        $this->addFlash('success', 'Le panier a été vidé.');
+        $this->addFlash('info', 'Le panier a été vidé.');
         return $this->redirectToRoute('panier_index');
     }
 
-    #[Route('/panier/modifier', name: 'panier_modifier', methods: ['POST'])]
+    #[Route('/modifier', name: '_modifier', methods: ['POST'])]
     public function modifierAction(
         Request $request,
         EntityManagerInterface $em,
         ProduitRepository $produitRepository,
         Security $security
     ): Response {
-        /** @var \App\Entity\User $user */
+        /** @var User $user */
         $user = $security->getUser();
 
         if (!$user) {
-            $this->addFlash('error', 'Connexion requise.');
+            $this->addFlash('info', 'Connexion requise.');
             return $this->redirectToRoute('app_login');
         }
 
@@ -111,7 +112,7 @@ class PanierController extends AbstractController
         $produit = $produitRepository->find($produitId);
 
         if (!$produitId || !is_numeric($produitId)) {
-            $this->addFlash('error', 'Erreur : identifiant du produit manquant ou invalide.');
+            $this->addFlash('info', 'Erreur : identifiant du produit manquant ou invalide.');
             return $this->redirectToRoute('produit_liste');
         }
 
@@ -138,7 +139,7 @@ class PanierController extends AbstractController
         // Ajouter au panier
         elseif ($quantiteModif > 0) {
             if ($produit->getStock() < $quantiteModif) {
-                $this->addFlash('error', 'Stock insuffisant.');
+                $this->addFlash('info', 'Stock insuffisant.');
                 return $this->redirectToRoute('produit_liste');
             }
 
@@ -156,11 +157,11 @@ class PanierController extends AbstractController
         }
 
         $em->flush();
-        $this->addFlash('success', 'Panier mis à jour.');
+        $this->addFlash('info', 'Panier mis à jour.');
         return $this->redirectToRoute('produit_liste');
     }
 
-    #[Route('/panier/commander', name: 'panier_commander')]
+    #[Route('/commander', name: '_commander')]
     public function commanderAction(Security $security, EntityManagerInterface $em): Response
     {
         $user = $security->getUser();
@@ -181,7 +182,7 @@ class PanierController extends AbstractController
 
         $em->flush();
 
-        $this->addFlash('success', 'Commande validée ! Merci pour votre achat.');
+        $this->addFlash('info', 'Commande validée ! Merci pour votre achat.');
         return $this->redirectToRoute('accueil_index');
     }
 

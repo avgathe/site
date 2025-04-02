@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\ProduitRepository;
-
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 
 final class ProduitController extends AbstractController
@@ -25,7 +25,8 @@ final class ProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/produits', name: 'produit_liste')]
+    #[Route('/produit/liste', name: 'produit_liste')]
+    #[isGranted('ROLE_CLIENT')]
     public function liste(ProduitRepository $produitRepository): Response
     {
         $produits = $produitRepository->findAll();
@@ -47,7 +48,7 @@ final class ProduitController extends AbstractController
         /** @var \App\Entity\User $user */
         $user = $security->getUser();
         if (!$user) {
-            $this->addFlash('error', 'Vous devez être connecté.');
+            $this->addFlash('info', 'Vous devez être connecté.');
             return $this->redirectToRoute('app_login');
         }
 
@@ -59,7 +60,7 @@ final class ProduitController extends AbstractController
         $quantite = max(1, (int) $request->request->get('quantite'));
 
         if ($produit->getStock() < $quantite) {
-            $this->addFlash('error', 'Stock insuffisant pour cette quantité.');
+            $this->addFlash('info', 'Stock insuffisant pour cette quantité.');
             return $this->redirectToRoute('produit_liste');
         }
 
@@ -81,7 +82,7 @@ final class ProduitController extends AbstractController
 
         $em->flush();
 
-        $this->addFlash('success', 'Produit ajouté au panier.');
+        $this->addFlash('info', 'Produit ajouté au panier.');
         return $this->redirectToRoute('produit_liste');
     }
 
@@ -94,12 +95,12 @@ final class ProduitController extends AbstractController
 
         /** @var \App\Entity\User $user */
         if (!$user) {
-            $this->addFlash('error', 'Vous devez être connecté pour accéder à cette page.');
+            $this->addFlash('info', 'Vous devez être connecté pour accéder à cette page.');
             return $this->redirectToRoute('app_login'); // ou 'accueil_index' si tu préfères
         }
 
         if (!$user->isAdmin()) {
-            $this->addFlash('error', 'Seuls les administrateurs peuvent ajouter un produit.');
+            $this->addFlash('info', 'Seuls les administrateurs peuvent ajouter un produit.');
             return $this->redirectToRoute('accueil_index');
         }
 
@@ -109,7 +110,7 @@ final class ProduitController extends AbstractController
         $form->handleRequest($request);
 
         if ($produit->getPrix() < 0) {
-            $this->addFlash('danger', 'Le prix ne peut pas être négatif.');
+            $this->addFlash('info', 'Le prix ne peut pas être négatif.');
             return $this->render('produit/ajouter.html.twig', [
                 'form' => $form->createView(),
             ]);
@@ -117,7 +118,7 @@ final class ProduitController extends AbstractController
 
 
         if ($produit->getStock() < 0) {
-            $this->addFlash('danger', 'Le stock ne peut pas être négatif.');
+            $this->addFlash('info', 'Le stock ne peut pas être négatif.');
             return $this->render('produit/ajouter.html.twig', [
                 'form' => $form->createView(),
             ]);
@@ -128,7 +129,7 @@ final class ProduitController extends AbstractController
             $em->persist($produit);
             $em->flush();
 
-            $this->addFlash('success', 'Produit ajouté avec succès !');
+            $this->addFlash('info', 'Produit ajouté avec succès !');
             return $this->redirectToRoute('accueil_index'); // ou autre route
         }
 
