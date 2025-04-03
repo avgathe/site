@@ -29,58 +29,6 @@ final class ProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/panier/ajouter/{id}', name: 'panier_ajouter', methods: ['POST'])]
-    public function ajouterAuPanierAction(
-        int $id,
-        Request $request,
-        ProduitRepository $produitRepository,
-        Security $security,
-        EntityManagerInterface $em
-    ): Response
-    {
-        /** @var \App\Entity\User $user */
-        $user = $security->getUser();
-        if (!$user) {
-            $this->addFlash('info', 'Vous devez être connecté.');
-            return $this->redirectToRoute('app_login');
-        }
-
-        $produit = $produitRepository->find($id);
-        if (!$produit) {
-            throw $this->createNotFoundException('Produit introuvable');
-        }
-
-        $quantite = max(1, (int) $request->request->get('quantite'));
-
-        if ($produit->getStock() < $quantite) {
-            $this->addFlash('info', 'Stock insuffisant pour cette quantité.');
-            return $this->redirectToRoute('produit_liste');
-        }
-
-        // Ajouter au panier
-        $panier = $user->getPaniers()->filter(fn($p) => $p->getProduit() === $produit)->first() ?: null;
-
-        if ($panier) {
-            $panier->setQuantite($panier->getQuantite() + $quantite);
-        } else {
-            $panier = new Panier();
-            $panier->setClient($user);
-            $panier->setProduit($produit);
-            $panier->setQuantite($quantite);
-            $em->persist($panier);
-        }
-
-        // Réduire le stock
-        $produit->setStock($produit->getStock() - $quantite);
-
-        $em->flush();
-
-        $this->addFlash('info', 'Produit ajouté au panier.');
-        return $this->redirectToRoute('produit_liste');
-    }
-
-
-
     #[Route('produit/ajout', name: 'produit_ajout')]
     #[IsGranted('ROLE_ADMIN')]
     public function ajouterAction(Request $request, EntityManagerInterface $em, Security $security): Response

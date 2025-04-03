@@ -7,4 +7,6 @@
 /public/bundles/
 /var/
 /vendor/
+/data.bd
+
 ###< symfony/framework-bundle ###
